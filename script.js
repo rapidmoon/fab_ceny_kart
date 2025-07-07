@@ -4,12 +4,16 @@ class FabCardChecker {
         this.filteredCards = [];
         this.priceData = {};
         this.productData = {};
+        this.cardList = [];
+        this.originalFilteredCards = [];
         this.init();
     }
 
     init() {
         this.setupEventListeners();
         this.hideLoading();
+        this.cardList = [];
+        this.originalFilteredCards = [];
     }
 
     setupEventListeners() {
@@ -20,6 +24,10 @@ class FabCardChecker {
         });
         document.getElementById('setFilter').addEventListener('change', () => this.filterCards());
         document.getElementById('rarityFilter').addEventListener('change', () => this.filterCards());
+        // Obsługa listy kart
+        document.getElementById('loadCardListBtn').addEventListener('click', () => this.loadCardListFromFile());
+        document.getElementById('filterByCardListBtn').addEventListener('click', () => this.filterByCardList());
+        document.getElementById('clearCardListBtn').addEventListener('click', () => this.clearCardListFilter());
     }
 
     async loadData() {
@@ -126,12 +134,55 @@ class FabCardChecker {
         });
     }
 
-    performSearch() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        if (searchTerm.length < 2) {
+    loadCardListFromFile() {
+        const fileInput = document.getElementById('cardListFile');
+        if (fileInput.files.length === 0) return;
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('cardListInput').value = e.target.result;
+        };
+        reader.readAsText(file);
+    }
+
+    getCardListFromTextarea() {
+        const raw = document.getElementById('cardListInput').value;
+        return raw.split(/\r?\n/)
+            .map(line => line.trim())
+            .filter(line => line.length > 0);
+    }
+
+    filterByCardList() {
+        this.cardList = this.getCardListFromTextarea().map(x => x.toLowerCase());
+        if (this.cardList.length === 0) {
             this.filteredCards = [...this.cards];
         } else {
-            this.filteredCards = this.cards.filter(card => 
+            this.filteredCards = this.cards.filter(card =>
+                this.cardList.includes(card.name.toLowerCase()) ||
+                this.cardList.includes(card.localName.toLowerCase())
+            );
+        }
+        this.originalFilteredCards = [...this.filteredCards];
+        this.updateStats();
+        this.displayCards();
+    }
+
+    clearCardListFilter() {
+        document.getElementById('cardListInput').value = '';
+        this.cardList = [];
+        this.filteredCards = [...this.cards];
+        this.originalFilteredCards = [];
+        this.updateStats();
+        this.displayCards();
+    }
+
+    performSearch() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        let base = this.cardList.length > 0 ? this.originalFilteredCards : this.cards;
+        if (searchTerm.length < 2) {
+            this.filteredCards = [...base];
+        } else {
+            this.filteredCards = base.filter(card => 
                 card.name.toLowerCase().includes(searchTerm) ||
                 card.localName.toLowerCase().includes(searchTerm) ||
                 card.set.toLowerCase().includes(searchTerm)
@@ -143,7 +194,8 @@ class FabCardChecker {
     filterCards() {
         const setFilter = document.getElementById('setFilter').value;
         const rarityFilter = document.getElementById('rarityFilter').value;
-        let filtered = [...this.filteredCards];
+        let base = this.cardList.length > 0 ? this.originalFilteredCards : this.cards;
+        let filtered = [...base];
         if (setFilter) {
             filtered = filtered.filter(card => card.set === setFilter);
         }

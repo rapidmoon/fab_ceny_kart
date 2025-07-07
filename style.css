@@ -248,6 +248,39 @@ button:hover {
     border-top: 1px solid #eee;
 }
 
+.cardlist-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.cardlist-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #667eea;
+}
+
+#cardListInput {
+    width: 100%;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 8px;
+    resize: vertical;
+}
+
+#cardListFile {
+    margin-right: 8px;
+}
+
+#loadCardListBtn, #filterByCardListBtn, #clearCardListBtn {
+    margin-right: 8px;
+    margin-bottom: 4px;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
@@ -271,5 +304,13 @@ button:hover {
     
     .cards-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .cardlist-section {
+        padding: 10px;
+    }
+    
+    #cardListInput {
+        font-size: 14px;
     }
 }

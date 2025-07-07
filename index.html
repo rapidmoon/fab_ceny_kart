@@ -13,6 +13,17 @@
             <p>Sprawdź ceny kart Flesh and Blood z CardMarket</p>
         </header>
 
+        <div class="cardlist-section">
+            <h2>Podaj listę kart (po jednej na linię):</h2>
+            <textarea id="cardListInput" rows="6" placeholder="Wklej tutaj nazwy kart..."></textarea>
+            <div style="margin: 10px 0;">
+                <input type="file" id="cardListFile" accept=".txt">
+                <button id="loadCardListBtn">Załaduj listę z pliku</button>
+                <button id="filterByCardListBtn">Filtruj wg listy</button>
+                <button id="clearCardListBtn">Wyczyść filtr</button>
+            </div>
+        </div>
+
         <div class="controls">
             <div class="search-section">
                 <input type="text" id="searchInput" placeholder="Wyszukaj kartę po nazwie...">
