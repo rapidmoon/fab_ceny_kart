@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flesh and Blood Card Price Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🃏 Flesh and Blood Card Price Checker</h1>
+            <p>Sprawdź ceny kart Flesh and Blood z CardMarket</p>
+        </header>
+
+        <div class="controls">
+            <div class="search-section">
+                <input type="text" id="searchInput" placeholder="Wyszukaj kartę po nazwie...">
+                <button id="searchBtn">🔍 Szukaj</button>
+            </div>
+            
+            <div class="filter-section">
+                <select id="setFilter">
+                    <option value="">Wszystkie sety</option>
+                </select>
+                <select id="rarityFilter">
+                    <option value="">Wszystkie rzadkości</option>
+                    <option value="C">Common</option>
+                    <option value="R">Rare</option>
+                    <option value="S">Super Rare</option>
+                    <option value="M">Majestic</option>
+                    <option value="L">Legendary</option>
+                    <option value="F">Fabled</option>
+                </select>
+                <button id="loadDataBtn">📥 Załaduj dane</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3 id="totalCards">0</h3>
+                <p>Kart w bazie</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="filteredCards">0</h3>
+                <p>Wyświetlonych kart</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="avgPrice">€0.00</h3>
+                <p>Średnia cena</p>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Ładowanie danych...</p>
+        </div>
+
+        <div class="error" id="error" style="display: none;">
+            <p>❌ Wystąpił błąd podczas ładowania danych</p>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            <!-- Karty będą dodane przez JavaScript -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
